@@ -134,7 +134,8 @@ class TestController extends ControllerBase {
             fourthValue: "",
             fifthValue: "",
             submitValue: 0,
-            messageValue: 0
+            messageValue: 0,
+            buttonValue: 0
           }
         },
         handleFirstLevelChange: function (event) {
@@ -143,8 +144,10 @@ class TestController extends ControllerBase {
             secondValue: "",
             thirdValue: "",
             fourthValue: "",
+            fifthValue: "",
             submitValue: 0,
-            messageValue: 0
+            messageValue: 0,
+            buttonValue: 0
          });
         },
         handleSecondLevelChange: function (event) {
@@ -154,26 +157,61 @@ class TestController extends ControllerBase {
             fourthValue: "",
             fifthValue: "",
             submitValue: 0,
-            messageValue: 0
+            messageValue: 0,
+            buttonValue: 0
          });
         },
         handleThirdLevelChange: function (event) {
           this.setState({
             thirdValue: event.target.value,
+            fourthValue: "",
             fifthValue: "",
             submitValue: 0,
             messageValue: 0
           });
+
+          if (event.target.value == "graduate_degree" || this.state.firstValue == "industry_wide_Technical") {
+            this.setState({
+              buttonValue: 0
+            });
+          }
+          else {
+            this.setState({
+              buttonValue: 1
+            });
+          }
         },
         handleFourthLevelChange: function (event) {
           this.setState({
             fourthValue: event.target.value,
           });
-        },
+
+          if (this.state.firstValue == "industry_wide_Technical" || event.target.value == "") {
+            this.setState({
+              buttonValue: 0
+            });
+          }
+          else {
+            this.setState({
+              buttonValue: 1
+            });
+          }
+       },
         handleFifthLevelChange: function (event) {
           this.setState({
             fifthValue: event.target.value
           });
+
+          if (event.target.value == "") {
+            this.setState({
+              buttonValue: 0
+            });
+          }
+          else {
+            this.setState({
+              buttonValue: 1
+            });
+          }
         },
         getSecondLevelField: function () {
   	      if (!this.state.firstValue) {
@@ -240,6 +278,12 @@ class TestController extends ControllerBase {
         getFifthLevelField: function () {
   	      if (this.state.firstValue != "industry_wide_Technical") {
     	    return null;
+          }
+          else if (this.state.thirdValue == "") {
+            return null;
+          }
+          else if (this.state.thirdValue != "" && this.state.thirdValue == "graduate_degree" && this.state.fourthValue == "") {
+            return null;
           }
 
           return (
@@ -311,6 +355,11 @@ class TestController extends ControllerBase {
 
           return null;
         },
+        showButton: function (event) {
+          if (this.state.buttonValue == 1) {
+            return ( <button>Send data!</button>);
+          }
+        },
         registerUser: function (event) {
           event.preventDefault();
           const data = new FormData(event.target);
@@ -349,7 +398,7 @@ class TestController extends ControllerBase {
             {this.getFourthValueMessage()}
             {this.getFifthLevelField()}
             {this.getFifthValueMessage()}
-            <button>Send data!</button>
+            {this.showButton()}
             {this.getMessage()}
             </form>
           )
