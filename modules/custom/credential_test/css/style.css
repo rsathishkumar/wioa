@@ -1,5 +1,14 @@
+#credential_form div {
+  margin: 15px 0px 0px 0px;
+}
+
 #message {
   color: #ff0000;
+  margin: 5px 0px 15px 0px !important;
+}
+
+#credential_form button {
+  margin-top: 15px;
 }
 
 #warning {
