@@ -157,9 +157,20 @@ class TestController extends ControllerBase {
             fourthValue: "",
             fifthValue: "",
             submitValue: 0,
-            messageValue: 0,
-            buttonValue: 0
+            messageValue: 0
          });
+
+         if (this.state.firstValue != "industry_wide_Technical" && event.target.value == "other") {
+            this.setState({
+              buttonValue: 1
+            });
+         }
+         else {
+           this.setState({
+             buttonValue: 0
+           });
+         }
+
         },
         handleThirdLevelChange: function (event) {
           this.setState({
@@ -237,7 +248,7 @@ class TestController extends ControllerBase {
           )
         },
         getThirdLevelField: function () {
-  	      if (!this.state.secondValue) {
+  	      if (!this.state.secondValue || this.state.secondValue == "other") {
     	    return null;
           }
 
@@ -279,7 +290,7 @@ class TestController extends ControllerBase {
   	      if (this.state.firstValue != "industry_wide_Technical") {
     	    return null;
           }
-          else if (this.state.thirdValue == "") {
+          else if (this.state.thirdValue == "" && this.state.secondValue != "other") {
             return null;
           }
           else if (this.state.thirdValue != "" && this.state.thirdValue == "graduate_degree" && this.state.fourthValue == "") {
@@ -341,7 +352,7 @@ class TestController extends ControllerBase {
           var message, message2, message3, message4, message5, warning = "";
 
           if (this.state.submitValue == 1) {
-            if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || !this.state.thirdValue)) {
+            if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue && this.state.secondValue != "other"))) {
               return ( <div id="message">Incomplete Response</div> );
             }
             else if (this.state.messageValue == 1) {
@@ -366,7 +377,7 @@ class TestController extends ControllerBase {
           this.setState({
             submitValue: 1
           });
-          if (!this.state.firstValue || !this.state.secondValue || !this.state.thirdValue) {
+          if (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue && this.state.secondValue != "other")) {
             return null;
           }
           return fetch("/tool/questions/save", {
