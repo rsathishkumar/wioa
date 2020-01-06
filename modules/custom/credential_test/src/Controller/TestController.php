@@ -347,9 +347,22 @@ class TestController extends ControllerBase {
           }
           return null;
         },
+        getIncompleteMessage: function () {
+          var incomplete = "";
+
+          if (this.state.submitValue == 1) {
+            if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue))) {
+              this.setState({
+                messageValue: 1
+              });
+              return ( <div id="message">Incomplete Response</div> );
+            }
+          }
+
+          return null;
+        },
         getMessage: function () {
-          var wioa = false;
-          var message, message2, message3, message4, message5, warning = "";
+          var incomplete = "";
 
           if (this.state.submitValue == 1) {
             if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue && this.state.secondValue != "other"))) {
@@ -362,7 +375,6 @@ class TestController extends ControllerBase {
               return ( <div id="message">WIOA Post Secondary Credential.</div> );
             }
           }
-
 
           return null;
         },
@@ -410,6 +422,7 @@ class TestController extends ControllerBase {
             {this.getFifthLevelField()}
             {this.getFifthValueMessage()}
             {this.showButton()}
+            {this.getIncompleteMessage()}
             {this.getMessage()}
             </form>
           )
