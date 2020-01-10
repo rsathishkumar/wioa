@@ -134,7 +134,6 @@ class TestController extends ControllerBase {
             fourthValue: "",
             fifthValue: "",
             submitValue: 0,
-            messageValue: 0,
             buttonValue: 0
           }
         },
@@ -146,7 +145,6 @@ class TestController extends ControllerBase {
             fourthValue: "",
             fifthValue: "",
             submitValue: 0,
-            messageValue: 0,
             buttonValue: 0
          });
         },
@@ -156,8 +154,7 @@ class TestController extends ControllerBase {
             thirdValue: "",
             fourthValue: "",
             fifthValue: "",
-            submitValue: 0,
-            messageValue: 0
+            submitValue: 0
          });
 
          if (this.state.firstValue != "industry_wide_Technical" && event.target.value == "other") {
@@ -177,8 +174,7 @@ class TestController extends ControllerBase {
             thirdValue: event.target.value,
             fourthValue: "",
             fifthValue: "",
-            submitValue: 0,
-            messageValue: 0
+            submitValue: 0
           });
 
           if (event.target.value == "graduate_degree" || this.state.firstValue == "industry_wide_Technical") {
@@ -195,9 +191,15 @@ class TestController extends ControllerBase {
         handleFourthLevelChange: function (event) {
           this.setState({
             fourthValue: event.target.value,
+            fifthValue: ""
           });
 
-          if (this.state.firstValue == "industry_wide_Technical" || event.target.value == "") {
+          if (this.state.firstValue == "industry_wide_Technical" && this.state.fifthValue == "") {
+            this.setState({
+              buttonValue: 0
+            });
+          }
+          else if (this.state.thirdValue == "graduate_degree" && event.target.value == "") {
             this.setState({
               buttonValue: 0
             });
@@ -207,7 +209,7 @@ class TestController extends ControllerBase {
               buttonValue: 1
             });
           }
-       },
+      },
         handleFifthLevelChange: function (event) {
           this.setState({
             fifthValue: event.target.value
@@ -310,9 +312,6 @@ class TestController extends ControllerBase {
         },
         getFirstValueMessage: function () {
   	      if (this.state.firstValue != "industry_wide_Technical" && this.state.firstValue != "") {
-            this.setState({
-              messageValue: 1
-            });
     	    return ( <div id="message">A recognized postsecondary credential is awarded in recognition of an individual\'s attainment of measurable technical or industry/occupational skills necessary to obtain employment or advance within an industry/occupation.</div> );
           }
           return null;
@@ -325,18 +324,12 @@ class TestController extends ControllerBase {
         },
         getThirdValueMessage: function () {
   	      if (this.state.thirdValue == "other" && this.state.thirdValue != "") {
-            this.setState({
-              messageValue: 1
-            });
     	    return ( <div id="message">Credentials other than those listed do not count as a success in the Credential Attainment Numerator, even though there are cases where they may be useful and/or necessary for the participant.</div> );
           }
           return null;
         },
         getFourthValueMessage: function () {
   	      if (this.state.thirdValue == "graduate_degree" && this.state.fourthValue == "No") {
-            this.setState({
-              messageValue: 1
-            });
     	    return ( <div id="message">Graduate Degrees can only count as a success for the WIOA title IV Vocational Rehabilition program.</div> );
           }
           return null;
@@ -347,28 +340,14 @@ class TestController extends ControllerBase {
           }
           return null;
         },
-        getIncompleteMessage: function () {
-          var incomplete = "";
-
-          if (this.state.submitValue == 1) {
-            if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue))) {
-              this.setState({
-                messageValue: 1
-              });
-              return ( <div id="message">Incomplete Response</div> );
-            }
-          }
-
-          return null;
-        },
         getMessage: function () {
           var incomplete = "";
 
           if (this.state.submitValue == 1) {
-            if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue && this.state.secondValue != "other"))) {
-              return ( <div id="message">Incomplete Response</div> );
+            if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue && this.state.secondValue == "other"))) {
+              return ( <div><div id="message">Incomplete Response</div><div id="message">Not a WIOA Post Secondary Credential.</div></div> );
             }
-            else if (this.state.messageValue == 1) {
+            else if (this.state.firstValue != "industry_wide_Technical" || this.state.thirdValue == "other" || (this.state.thirdValue == "graduate_degree" && this.state.fourthValue == "No")) {
               return ( <div id="message">Not a WIOA Post Secondary Credential.</div> );
             }
             else {
@@ -381,6 +360,11 @@ class TestController extends ControllerBase {
         showButton: function (event) {
           if (this.state.buttonValue == 1) {
             return ( <button>Send data!</button>);
+          }
+          else {
+            this.setState({
+              submitValue: 0
+            });
           }
         },
         registerUser: function (event) {
@@ -422,7 +406,6 @@ class TestController extends ControllerBase {
             {this.getFifthLevelField()}
             {this.getFifthValueMessage()}
             {this.showButton()}
-            {this.getIncompleteMessage()}
             {this.getMessage()}
             </form>
           )
