@@ -242,7 +242,8 @@ class TestController extends ControllerBase {
                 <option value="professional_organization">Professional/Industry/Employer Organization</option>
                 <option value="recognized_state">ETA Office of Apprenticeship or Recognized State Apprenticeship Agency</option>
                 <option value="public_regulatory">Public Regulatory Agency</option>
-                <option value="veterans_affairs">Public Regulatory Agency</option>
+                <option value="public_license">Public License Agency</option>
+                <option value="veterans_affairs">Dept of Veteran\'s Affairs (VA)-approved program</option>
                 <option value="job_corps">Job Corps</option>
                 <option value="other">Other</option>
               </select>
