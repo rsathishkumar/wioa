@@ -233,7 +233,7 @@ class TestController extends ControllerBase {
 
           return (
             <div>
-              <label>What type of institution is providing the credential?</label>
+              <label>What type of organization or institution is offering the training program?</label>
               <select onChange={this.handleSecondLevelChange} value={this.state.secondValue} id="type-of-institution" name="type_of_institution">
                 <option value="">---</option>
                 <option value="state_agency">State Agency</option>
@@ -241,7 +241,7 @@ class TestController extends ControllerBase {
                 <option value="native_american">Indian/Native American Tribal Organization</option>
                 <option value="professional_organization">Professional/Industry/Employer Organization</option>
                 <option value="recognized_state">ETA Office of Apprenticeship or Recognized State Apprenticeship Agency</option>
-                <option value="public_license">Public License Agency</option>
+                <option value="public_license">Public RegulatoryAgency/Government Licensing Entity</option>
                 <option value="veterans_affairs">Dept of Veteran\'s Affairs (VA)-approved program</option>
                 <option value="job_corps">Job Corps</option>
                 <option value="other">Other</option>
@@ -301,7 +301,7 @@ class TestController extends ControllerBase {
 
           return (
             <div>
-            <label>Is the training related to an in-demand industry in the local area?</label>
+            <label>Is the training related to an in-demand industry/occupation in the local area?</label>
     	    <select onChange={this.handleFifthLevelChange} value={this.state.fifthValue} id="in-demand-industry" name="in_demand_industry">
        	    <option value="">---</option>
       	    <option value="Yes">Yes</option>
@@ -318,7 +318,7 @@ class TestController extends ControllerBase {
         },
         getSecondValueMessage: function () {
   	      if (this.state.secondValue == "other" && this.state.secondValue != "") {
-    	    return ( <div id="message">WARNING: States should review credentials carefully to ensure that institutions not on the list of credential-issuing instutions from the list defined in WIOA Joint Performance Guidance (TEGL 10-16) are meeting the WIOA definitions.</div> );
+    	    return ( <div id="message">Warning: Other organizations not listed may award credentials. If "other" confirm that the organization awards recognized credentials.</div> );
           }
           return null;
         },
@@ -385,7 +385,7 @@ class TestController extends ControllerBase {
           return (
           <form onSubmit={this.registerUser} id="credential_form">
             <div>
-              <label>What type of skills does it result in?</label>
+              <label>What type of Skills does it attest to?</label>
               <select onChange={this.handleFirstLevelChange} value={this.state.firstValue} id="type-of-skill" name="type_of_skill">
                 <option value="">---</option>
                 <option value="industry_wide_Technical">Industry-wide Technical or Industry/Occupational Skills</option>
