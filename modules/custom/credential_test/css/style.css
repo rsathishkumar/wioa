@@ -5,6 +5,8 @@
 #firstmessage, #secondmessage, #thirdmessage, #fourthmessage, #fifthmessage {
   color: #ff0000;
   margin: 5px 0px 15px 0px !important;
+  border: none;
+  padding: 0px;
 }
 
 #credential_form button {
