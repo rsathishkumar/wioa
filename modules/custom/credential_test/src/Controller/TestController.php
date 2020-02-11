@@ -390,6 +390,7 @@ class TestController extends ControllerBase {
           downloadLink.click();
         },
         handlePrintButtonClick: function (event) {
+          event.preventDefault();
           var pdf = new jsPDF("p", "pt", "letter");
 
           var i = 40;
