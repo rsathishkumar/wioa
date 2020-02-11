@@ -5,6 +5,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 use Drupal\node\Entity\Node;
+use Fpdf\Fpdf;
 
 /**
  * Provides route responses for the Example module.
@@ -129,77 +130,62 @@ class TestController extends ControllerBase {
         getInitialState: function() {
           return {
             firstValue: "",
+            firstLabel: "",
             secondValue: "",
+            secondLabel: "",
             thirdValue: "",
             fourthValue: "",
+            fourthLabel: "",
             fifthValue: "",
             submitValue: 0,
             buttonValue: 0
           }
         },
         handleFirstLevelChange: function (event) {
+          let index = event.nativeEvent.target.selectedIndex;
           this.setState({
             firstValue: event.target.value,
+            firstLabel: event.nativeEvent.target[index].text,
             secondValue: "",
+            secondLabel: "",
             thirdValue: "",
             fourthValue: "",
+            fourthLabel: "",
             fifthValue: "",
             submitValue: 0,
             buttonValue: 0
          });
         },
         handleSecondLevelChange: function (event) {
+          let index = event.nativeEvent.target.selectedIndex;
           this.setState({
             secondValue: event.target.value,
+            secondLabel: event.nativeEvent.target[index].text,
             thirdValue: "",
             fourthValue: "",
+            fourthLabel: "",
             fifthValue: "",
-            submitValue: 0
+            buttonValue: 0
          });
-
-         if (this.state.firstValue != "industry_wide_Technical" && event.target.value == "other") {
-            this.setState({
-              buttonValue: 1
-            });
-         }
-         else {
-           this.setState({
-             buttonValue: 0
-           });
-         }
-
         },
         handleThirdLevelChange: function (event) {
           this.setState({
             thirdValue: event.target.value,
             fourthValue: "",
+            fourthLabel: "",
             fifthValue: "",
-            submitValue: 0
+            buttonValue: 0
           });
-
-          if (event.target.value == "graduate_degree" || this.state.firstValue == "industry_wide_Technical") {
-            this.setState({
-              buttonValue: 0
-            });
-          }
-          else {
-            this.setState({
-              buttonValue: 1
-            });
-          }
         },
         handleFourthLevelChange: function (event) {
+          let index = event.nativeEvent.target.selectedIndex;
           this.setState({
             fourthValue: event.target.value,
+            fourthLabel: event.nativeEvent.target[index].text,
             fifthValue: ""
           });
 
-          if (this.state.firstValue == "industry_wide_Technical" && this.state.fifthValue == "") {
-            this.setState({
-              buttonValue: 0
-            });
-          }
-          else if (this.state.thirdValue == "graduate_degree" && event.target.value == "") {
+          if (event.target.value == "industry_wide_Technical") {
             this.setState({
               buttonValue: 0
             });
@@ -227,14 +213,266 @@ class TestController extends ControllerBase {
           }
         },
         getSecondLevelField: function () {
-  	      if (!this.state.firstValue) {
+  	      if (!this.state.firstValue || this.state.firstValue == "other") {
     	    return null;
           }
 
           return (
-            <div>
+            <div className="questions">
+              <label>What type of credential is it?</label>
+              <select onChange={this.handleSecondLevelChange} value={this.state.secondValue} id="type-of-credential" name="type_of_credential">
+                <option value="">---</option>
+                <option value="secondary_school">Secondary School Diploma/Equivalent</option>
+                <option value="associate_degree">Associate Degree</option>
+                <option value="bachelor_degree">Bachelor Degree</option>
+                <option value="occupational_licensure">Occupational Licensure</option>
+                <option value="occupational_certificate">Occupational Certificate (including Registered Apprenticeship and Career and Technical Education certificates)</option>
+                <option value="occupational_certification">Occupational Certification</option>
+                <option value="other_industry">Other Industry/Occupational Skills Completion</option>
+                <option value="other">Other</option>
+                <option value="graduate_degree">Graduate Degree (VR-only)</option>
+              </select>
+            </div>
+          )
+        },
+        getThirdLevelField: function () {
+  	      if (this.state.secondValue != "graduate_degree") {
+    	    return null;
+          }
+
+          return (
+            <div className="questions">
+            <label>Is the participant receiving training/education through VR?</label>
+    	    <select onChange={this.handleThirdLevelChange} value={this.state.thirdValue} id="education-vr" name="education_through_vr">
+       	    <option value="">---</option>
+      	    <option value="Yes">Yes</option>
+      	    <option value="No">No</option>
+            </select>
+            </div>
+          )
+        },
+        getFourthLevelField: function () {
+  	      if (!this.state.secondValue && this.state.firstValue != "other") {
+    	    return null;
+          }
+          else if (this.state.secondValue == "graduate_degree" && this.state.thirdValue == "") {
+            return null;
+          }
+
+          return (
+            <div className="questions">
+              <label>What type of Skills does it attest to?</label>
+              <select onChange={this.handleFourthLevelChange} value={this.state.fourthValue} id="type-of-skill" name="type_of_skill">
+                <option value="">---</option>
+                <option value="industry_wide_Technical">Industry-wide Technical or Industry/Occupational Skills</option>
+                <option value="general_safety">General Safety Skills</option>
+                <option value="work_readiness">Work Readiness Skills</option>
+                <option value="hygiene_skills">Hygiene Skills</option>
+                <option value="general_computer">General Computer Skills (e.g. word/excel/outlook/PPT/etc)</option>
+                <option value="other_general">Other General Skills</option>
+              </select>
+            </div>
+          )
+        },
+        getFifthLevelField: function () {
+  	      if (this.state.fourthValue != "industry_wide_Technical") {
+    	    return null;
+          }
+
+          return (
+            <div className="questions">
+            <label>Is the training related to an in-demand industry/occupation in the local area?</label>
+    	    <select onChange={this.handleFifthLevelChange} value={this.state.fifthValue} id="in-demand-industry" name="in_demand_industry">
+       	    <option value="">---</option>
+      	    <option value="Yes">Yes</option>
+      	    <option value="No">No</option>
+            </select>
+            </div>
+          )
+        },
+        getFirstValueMessage: function () {
+  	      if (this.state.firstValue == "other" && this.state.firstValue != "") {
+    	    return ( <div id="firstmessage" className="messages">Warning: Other organizations not listed may award credentials. If "other" confirm that the organization awards recognized credentials.</div> );
+          }
+          return null;
+
+        },
+        getSecondValueMessage: function () {
+  	      if (this.state.secondValue == "other" && this.state.secondValue != "") {
+    	    return ( <div id="secondmessage" className="messages">Credentials other than those listed do not count as a success in the Credential Attainment Numerator, even though there are cases where they may be useful and/or necessary for the participant.</div> );
+          }
+          return null;
+        },
+        getThirdValueMessage: function () {
+  	      if (this.state.secondValue == "graduate_degree" && this.state.thirdValue == "No") {
+    	    return ( <div id="thirdmessage" className="messages">Graduate Degrees can only count as a success for the WIOA title IV Vocational Rehabilition program.</div> );
+          }
+          return null;
+        },
+        getFourthValueMessage: function () {
+  	      if (this.state.fourthValue != "industry_wide_Technical" && this.state.fourthValue != "") {
+    	    return ( <div id="fourthmessage" className="messages">A recognized postsecondary credential is awarded in recognition of an individual\'s attainment of measurable technical or industry/occupational skills necessary to obtain employment or advance within an industry/occupation.</div> );
+          }
+          return null;
+        },
+        getFifthValueMessage: function () {
+  	      if (this.state.fourthValue == "industry_wide_Technical" && this.state.fifthValue == "No") {
+    	    return ( <div id="fifthmessage" className="messages">While this may count as a credential, note that WIOA title I funds can only be used to pay for training that is related to an in-demand industry or occupation.</div> );
+          }
+          return null;
+        },
+        getMessage: function () {
+          var incomplete = "";
+
+          if (this.state.buttonValue != 1) {
+            return null;
+          }
+          else if (this.state.fourthValue != "industry_wide_Technical" || this.state.secondValue == "other" || (this.state.secondValue == "graduate_degree" && this.state.thirdValue == "No")) {
+            return ( <div id="lastmessage">Not a WIOA Post Secondary Credential.</div> );
+          }
+          else {
+            return ( <div id="lastmessage">WIOA Post Secondary Credential.</div> );
+          }
+
+          return null;
+        },
+        showPrintButton: function (event) {
+          if (this.state.buttonValue == 1) {
+            return ( <button onClick={this.handlePrintButtonClick}>Export PDF</button>);
+          }
+          else {
+            this.setState({
+              submitValue: 0
+            });
+          }
+        },
+        handleCSVButtonClick: function (event) {
+          event.preventDefault();
+          var csv = [];
+
+          var rows = document.querySelectorAll("div.questions");
+
+          for(var i = 0; i < rows.length; i++) {
+            var row = [], cols = rows[i].querySelectorAll("label, select");
+            for(var j = 0; j < cols.length; j++) {
+                if (cols[j].type == "select-one") {
+                  row.push("\""+cols[j].selectedOptions[0].label+"\"");
+                }
+                else {
+                   row.push("\""+cols[j].innerText+"\"");
+                }
+            }
+            var warnings = rows[i].nextElementSibling;
+            if (warnings.classList.contains("messages")) {
+              row.push("\"" + warnings.innerText + "\"");
+            }
+            csv.push(row.join(","));
+          }
+
+          csv.push(jQuery("#lastmessage").html());
+
+          var csvcontent = csv.join("\r\n");
+
+          var csvFile;
+          var downloadLink;
+
+          if (window.Blob == undefined || window.URL == undefined || window.URL.createObjectURL == undefined) {
+              alert("Your browser doesnt support Blobs");
+              return;
+          }
+
+          csvFile = new Blob([csvcontent], {type:"text/csv"});
+          downloadLink = document.createElement("a");
+          downloadLink.download = "tools";
+          downloadLink.href = window.URL.createObjectURL(csvFile);
+          downloadLink.style.display = "none";
+          document.body.appendChild(downloadLink);
+          downloadLink.click();
+        },
+        handlePrintButtonClick: function (event) {
+          var pdf = new jsPDF("p", "pt", "letter");
+
+          var i = 40;
+          pdf.setFontSize(11);
+          var source = "<div>What type of organization or institution is offering the training program?</div>";
+          source += "<div>" + this.state.firstLabel + "</div>";
+          if (jQuery("#firstmessage").length > 0) {
+            source += jQuery("#firstmessage").html();
+          }
+
+          if (this.state.secondLabel) {
+            source += "<div>What type of credential is it?</div>";
+            source += "<div>" + this.state.secondLabel + "</div>";
+            if (jQuery("#secondmessage").length > 0) {
+              source += jQuery("#secondmessage").html();
+            }
+          }
+
+          if (this.state.thirdValue) {
+            source += "<div>Is the participant receiving training/education through VR?</div>";
+            source += "<div>" + this.state.thirdValue + "</div>";
+            if (jQuery("#thirdmessage").length > 0) {
+              source += jQuery("#thirdmessage").html();
+            }
+          }
+
+          if (this.state.fourthLabel) {
+            source += "<div>What type of Skills does it attest to?</div>";
+            source += "<div>" + this.state.fourthLabel + "</div>";
+            if (jQuery("#fourthmessage").length > 0) {
+              source += jQuery("#fourthmessage").html();
+            }
+          }
+
+          if (this.state.fifthValue) {
+            source += "<div>Is the training related to an in-demand industry/occupation in the local area?</div>";
+            source += "<div>" + this.state.fifthValue + "</div>";
+            if (jQuery("#fifthmessage").length > 0) {
+              source += jQuery("#fifthmessage").html();
+            }
+          }
+
+          if (jQuery("#lastmessage").length > 0) {
+            source += jQuery("#lastmessage").html();
+          }
+
+          var margins = {
+            top: 40,
+            bottom: 60,
+            left: 40,
+            width: 522
+          };
+          pdf.fromHTML(
+            source, // HTML string or DOM elem ref.
+            margins.left, // x coord
+            margins.top, {
+              // y coord
+              width: margins.width // max width of content on PDF
+            },
+            function(dispose) {
+              // dispose: object with X, Y of the last line add to the PDF
+              //          this allow the insertion of new lines after html
+              pdf.save("tools.pdf");
+            },
+            margins
+          );
+        },
+        showCSVButton: function (event) {
+          if (this.state.buttonValue == 1) {
+            return ( <button onClick={this.handleCSVButtonClick}>Export CSV</button>);
+          }
+          else {
+            this.setState({
+              submitValue: 0
+            });
+          }
+        },
+        render: function() {
+          return (
+          <form onSubmit={this.registerUser} id="credential_form" method="post" target="_blank">
+            <div className="questions">
               <label>What type of organization or institution is offering the training program?</label>
-              <select onChange={this.handleSecondLevelChange} value={this.state.secondValue} id="type-of-institution" name="type_of_institution">
+              <select onChange={this.handleFirstLevelChange} value={this.state.firstValue} id="type-of-institution" name="type_of_institution">
                 <option value="">---</option>
                 <option value="state_agency">State Agency</option>
                 <option value="higher_education">Institution of Higher Education</option>
@@ -247,155 +485,6 @@ class TestController extends ControllerBase {
                 <option value="other">Other</option>
               </select>
             </div>
-          )
-        },
-        getThirdLevelField: function () {
-  	      if (!this.state.secondValue || this.state.secondValue == "other") {
-    	    return null;
-          }
-
-          return (
-            <div>
-            <label>What type of credential is it?</label>
-            <select onChange={this.handleThirdLevelChange} value={this.state.thirdValue} id="type-of-credential" name="type_of_credential">
-              <option value="">---</option>
-              <option value="secondary_school">Secondary School Diploma/Equivalent</option>
-              <option value="associate_degree">Associate Degree</option>
-              <option value="bachelor_degree">Bachelor Degree</option>
-              <option value="occupational_licensure">Occupational Licensure</option>
-              <option value="occupational_certificate">Occupational Certificate (including Registered Apprenticeship and Career and Technical Education certificates)</option>
-              <option value="occupational_certification">Occupational Certification</option>
-              <option value="other_industry">Other Industry/Occupational Skills Completion</option>
-              <option value="other">Other</option>
-              <option value="graduate_degree">Graduate Degree (VR-only)</option>
-            </select>
-            </div>
-          )
-        },
-        getFourthLevelField: function () {
-  	      if (this.state.thirdValue != "graduate_degree") {
-    	    return null;
-          }
-
-          return (
-            <div>
-            <label>Is the participant receiving training/education through VR?</label>
-    	    <select onChange={this.handleFourthLevelChange} value={this.state.fourthValue} id="education-vr" name="education_through_vr">
-       	    <option value="">---</option>
-      	    <option value="Yes">Yes</option>
-      	    <option value="No">No</option>
-            </select>
-            </div>
-          )
-        },
-        getFifthLevelField: function () {
-  	      if (this.state.firstValue != "industry_wide_Technical") {
-    	    return null;
-          }
-          else if (this.state.thirdValue == "" && this.state.secondValue != "other") {
-            return null;
-          }
-          else if (this.state.thirdValue != "" && this.state.thirdValue == "graduate_degree" && this.state.fourthValue == "") {
-            return null;
-          }
-
-          return (
-            <div>
-            <label>Is the training related to an in-demand industry/occupation in the local area?</label>
-    	    <select onChange={this.handleFifthLevelChange} value={this.state.fifthValue} id="in-demand-industry" name="in_demand_industry">
-       	    <option value="">---</option>
-      	    <option value="Yes">Yes</option>
-      	    <option value="No">No</option>
-            </select>
-            </div>
-          )
-        },
-        getFirstValueMessage: function () {
-  	      if (this.state.firstValue != "industry_wide_Technical" && this.state.firstValue != "") {
-    	    return ( <div id="message">A recognized postsecondary credential is awarded in recognition of an individual\'s attainment of measurable technical or industry/occupational skills necessary to obtain employment or advance within an industry/occupation.</div> );
-          }
-          return null;
-        },
-        getSecondValueMessage: function () {
-  	      if (this.state.secondValue == "other" && this.state.secondValue != "") {
-    	    return ( <div id="message">Warning: Other organizations not listed may award credentials. If "other" confirm that the organization awards recognized credentials.</div> );
-          }
-          return null;
-        },
-        getThirdValueMessage: function () {
-  	      if (this.state.thirdValue == "other" && this.state.thirdValue != "") {
-    	    return ( <div id="message">Credentials other than those listed do not count as a success in the Credential Attainment Numerator, even though there are cases where they may be useful and/or necessary for the participant.</div> );
-          }
-          return null;
-        },
-        getFourthValueMessage: function () {
-  	      if (this.state.thirdValue == "graduate_degree" && this.state.fourthValue == "No") {
-    	    return ( <div id="message">Graduate Degrees can only count as a success for the WIOA title IV Vocational Rehabilition program.</div> );
-          }
-          return null;
-        },
-        getFifthValueMessage: function () {
-  	      if (this.state.firstValue == "industry_wide_Technical" && this.state.fifthValue == "No") {
-    	    return ( <div id="message">While this may count as a credential, note that WIOA title I funds can only be used to pay for training that is related to an in-demand industry or occupation.</div> );
-          }
-          return null;
-        },
-        getMessage: function () {
-          var incomplete = "";
-
-          if (this.state.submitValue == 1) {
-            if (this.state.submitValue && (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue && this.state.secondValue == "other"))) {
-              return ( <div><div id="message">Incomplete Response</div><div id="message">Not a WIOA Post Secondary Credential.</div></div> );
-            }
-            else if (this.state.firstValue != "industry_wide_Technical" || this.state.thirdValue == "other" || (this.state.thirdValue == "graduate_degree" && this.state.fourthValue == "No")) {
-              return ( <div id="message">Not a WIOA Post Secondary Credential.</div> );
-            }
-            else {
-              return ( <div id="message">WIOA Post Secondary Credential.</div> );
-            }
-          }
-
-          return null;
-        },
-        showButton: function (event) {
-          if (this.state.buttonValue == 1) {
-            return ( <button>Send data!</button>);
-          }
-          else {
-            this.setState({
-              submitValue: 0
-            });
-          }
-        },
-        registerUser: function (event) {
-          event.preventDefault();
-          const data = new FormData(event.target);
-          this.setState({
-            submitValue: 1
-          });
-          if (!this.state.firstValue || !this.state.secondValue || (!this.state.thirdValue && this.state.secondValue != "other")) {
-            return null;
-          }
-          return fetch("/tool/questions/save", {
-            method: "POST",
-            body: data
-          });
-        },
-        render: function() {
-          return (
-          <form onSubmit={this.registerUser} id="credential_form">
-            <div>
-              <label>What type of Skills does it attest to?</label>
-              <select onChange={this.handleFirstLevelChange} value={this.state.firstValue} id="type-of-skill" name="type_of_skill">
-                <option value="">---</option>
-                <option value="industry_wide_Technical">Industry-wide Technical or Industry/Occupational Skills</option>
-                <option value="general_safety">General Safety Skills</option>
-                <option value="work_readiness">Work Readiness Skills</option>
-                <option value="hygiene_skills">Hygiene Skills</option>
-                <option value="general_computer">General Computer Skills (e.g. word/excel/outlook/PPT/etc)</option>
-                <option value="other_general">Other General Skills</option>
-              </select>
-            </div>
             {this.getFirstValueMessage()}
             {this.getSecondLevelField()}
             {this.getSecondValueMessage()}
@@ -405,7 +494,9 @@ class TestController extends ControllerBase {
             {this.getFourthValueMessage()}
             {this.getFifthLevelField()}
             {this.getFifthValueMessage()}
-            {this.showButton()}
+            {this.showPrintButton()}
+            {this.showCSVButton()}
+            <div id="pdflink"></div>
             {this.getMessage()}
             </form>
           )
@@ -420,25 +511,4 @@ class TestController extends ControllerBase {
 
     return $form;
   }
-
-  public function questionSaveForm() {
-    $type_of_skill = \Drupal::request()->request->get('type_of_skill');
-    $type_of_institution = \Drupal::request()->request->get('type_of_institution');
-    $type_of_credential = \Drupal::request()->request->get('type_of_credential');
-    $education_through_vr = \Drupal::request()->request->get('education_through_vr');
-    $in_demand_industry = \Drupal::request()->request->get('in_demand_industry');
-
-    $user = \Drupal::currentUser();
-    $node = Node::create([
-      'type'  => 'credential_test',
-      'title' => 'Submitted by user: ' . $user->getAccountName(),
-      'field_education_through_vr' => $education_through_vr,
-      'field_in_demand_industry' => $in_demand_industry,
-      'field_type_of_credential' => $type_of_credential,
-      'field_type_of_institution' => $type_of_institution,
-      'field_type_of_skills' => $type_of_skill
-    ]);
-    $node->save();
-  }
-
 }
