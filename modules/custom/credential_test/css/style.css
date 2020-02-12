@@ -2,11 +2,26 @@
   margin: 15px 0px 0px 0px;
 }
 
-#firstmessage, #secondmessage, #thirdmessage, #fourthmessage, #fifthmessage {
-  color: #ff0000;
+#firstmessage, #secondmessage, #thirdmessage, #fourthmessage, #fifthmessage, .success, .error {
+  color: #FFF;
   margin: 5px 0px 15px 0px !important;
-  border: none;
-  padding: 0px;
+  padding: 10px 20px;
+  border-width: 1px 1px 1px 1px;
+}
+
+#firstmessage, #fifthmessage {
+  background-color: #ecca22;
+  border-color: #d2af05;
+}
+
+#secondmessage, #fourthmessage, #thirdmessage, .error {
+  background-color: #ea6f6f;
+  border-color: #f33434;
+}
+
+.success {
+  background-color: #a7cc4d;
+  border-color: #84b313;
 }
 
 #credential_form button {

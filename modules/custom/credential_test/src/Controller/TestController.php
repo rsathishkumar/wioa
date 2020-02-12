@@ -328,10 +328,10 @@ class TestController extends ControllerBase {
             return null;
           }
           else if (this.state.fourthValue != "industry_wide_Technical" || this.state.secondValue == "other" || (this.state.secondValue == "graduate_degree" && this.state.thirdValue == "No")) {
-            return ( <div id="lastmessage">Not a WIOA Post Secondary Credential.</div> );
+            return ( <div id="lastmessage" className="error">Not a WIOA Post Secondary Credential.</div> );
           }
           else {
-            return ( <div id="lastmessage">WIOA Post Secondary Credential.</div> );
+            return ( <div id="lastmessage" className="success">WIOA Post Secondary Credential.</div> );
           }
 
           return null;
