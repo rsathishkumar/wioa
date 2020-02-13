@@ -383,7 +383,7 @@ class TestController extends ControllerBase {
 
           csvFile = new Blob([csvcontent], {type:"text/csv"});
           downloadLink = document.createElement("a");
-          downloadLink.download = "tools";
+          downloadLink.download = "tools.csv";
           downloadLink.href = window.URL.createObjectURL(csvFile);
           downloadLink.style.display = "none";
           document.body.appendChild(downloadLink);
