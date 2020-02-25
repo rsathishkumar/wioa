@@ -340,11 +340,7 @@ class TestController extends ControllerBase {
           if (this.state.buttonValue == 1) {
             return ( <button onClick={this.handlePrintButtonClick}>Export PDF</button>);
           }
-          else {
-            this.setState({
-              submitValue: 0
-            });
-          }
+          return null;
         },
         handleCSVButtonClick: function (event) {
           event.preventDefault();
@@ -461,11 +457,6 @@ class TestController extends ControllerBase {
         showCSVButton: function (event) {
           if (this.state.buttonValue == 1) {
             return ( <button onClick={this.handleCSVButtonClick}>Export CSV</button>);
-          }
-          else {
-            this.setState({
-              submitValue: 0
-            });
           }
         },
         render: function() {
