@@ -8,3 +8,8 @@
   background-image: -webkit-linear-gradient(top, #055a8e 0%, #1d84c3 100%);
   background-image: linear-gradient(to bottom, #527902 0%, #C4D79B 100%);
 }
+
+.menu--main li a {
+  font-size: 16px;
+  font-weight: bold;
+}
