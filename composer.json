@@ -20,6 +20,7 @@
         "drupal/core-project-message": "^8.8",
         "drupal/core-recommended": "^8.8",
         "drupal/core-vendor-hardening": "^8.8",
+        "fpdf/fpdf": "^1.81",
         "webonyx/graphql-php": "^0.13.8"
     },
     "require-dev": {
