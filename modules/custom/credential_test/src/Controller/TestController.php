@@ -281,7 +281,7 @@ class TestController extends ControllerBase {
 
           return (
             <div className="questions">
-            <label>Is the training related to an in-demand industry/occupation in the local area?</label>
+            <label>Is the training related to an in-demand industry/occupation in the local area? <br />20 C.F.R 680.210 (b) requires training to be directly linked to the employment opportunities in the local area or the planning region, or in another area to which the individuals are willing to commute or relocate</label>
     	    <select onChange={this.handleFifthLevelChange} value={this.state.fifthValue} id="in-demand-industry" name="in_demand_industry">
        	    <option value="">---</option>
       	    <option value="Yes">Yes</option>
@@ -422,7 +422,7 @@ class TestController extends ControllerBase {
           }
 
           if (this.state.fifthValue) {
-            source += "<div>Is the training related to an in-demand industry/occupation in the local area?</div>";
+            source += "<div>Is the training related to an in-demand industry/occupation in the local area? 20 C.F.R 680.210 (b) requires training to be directly linked to the employment opportunities in the local area or the planning region, or in another area to which the individuals are willing to commute or relocate</div>";
             source += "<div>" + this.state.fifthValue + "</div>";
             if (jQuery("#fifthmessage").length > 0) {
               source += jQuery("#fifthmessage").html();
