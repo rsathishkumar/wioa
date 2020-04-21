@@ -281,7 +281,7 @@ class TestController extends ControllerBase {
 
           return (
             <div className="questions">
-            <label>Is the training related to an in-demand industry/occupation in the local area? <br />20 C.F.R 680.210 (b) requires training to be directly linked to the employment opportunities in the local area or the planning region, or in another area to which the individuals are willing to commute or relocate</label>
+            <label>Is the training related to an in-demand industry/occupation in the local area? <p className="desc">20 C.F.R 680.210 (b) requires training to be directly linked to the employment opportunities in the local area or the planning region, or in another area to which the individuals are willing to commute or relocate</p></label>
     	    <select onChange={this.handleFifthLevelChange} value={this.state.fifthValue} id="in-demand-industry" name="in_demand_industry">
        	    <option value="">---</option>
       	    <option value="Yes">Yes</option>
