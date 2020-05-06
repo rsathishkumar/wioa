@@ -1,12 +1,18 @@
 <?php
-
-declare(strict_types=1);
-
 namespace GraphQL\Type\Definition;
 
-class ListOfType extends Type implements WrappingType, OutputType, NullableType, InputType
+use GraphQL\Error\InvariantViolation;
+use GraphQL\Utils\Utils;
+
+/**
+ * Class ListOfType
+ * @package GraphQL\Type\Definition
+ */
+class ListOfType extends Type implements WrappingType, OutputType, InputType
 {
-    /** @var ObjectType|InterfaceType|UnionType|ScalarType|InputObjectType|EnumType */
+    /**
+     * @var ObjectType|InterfaceType|UnionType|ScalarType|InputObjectType|EnumType
+     */
     public $ofType;
 
     /**
@@ -17,20 +23,23 @@ class ListOfType extends Type implements WrappingType, OutputType, NullableType,
         $this->ofType = Type::assertType($type);
     }
 
-    public function toString() : string
+    /**
+     * @return string
+     */
+    public function toString()
     {
-        return '[' . $this->ofType->toString() . ']';
+        $type = $this->ofType;
+        $str = $type instanceof Type ? $type->toString() : (string) $type;
+        return '[' . $str . ']';
     }
 
     /**
      * @param bool $recurse
-     *
      * @return ObjectType|InterfaceType|UnionType|ScalarType|InputObjectType|EnumType
      */
     public function getWrappedType($recurse = false)
     {
         $type = $this->ofType;
-
-        return $recurse && $type instanceof WrappingType ? $type->getWrappedType($recurse) : $type;
+        return ($recurse && $type instanceof WrappingType) ? $type->getWrappedType($recurse) : $type;
     }
 }
