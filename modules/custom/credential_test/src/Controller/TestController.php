@@ -347,25 +347,41 @@ class TestController extends ControllerBase {
           var csv = [];
 
           var rows = document.querySelectorAll("div.questions");
-
+          var row = [];
           for(var i = 0; i < rows.length; i++) {
-            var row = [], cols = rows[i].querySelectorAll("label, select");
+            var cols = rows[i].querySelectorAll("label");
+            for(var j = 0; j < cols.length; j++) {
+              row.push("\""+cols[j].innerText+"\"");
+            }
+          }
+          row.push("\"Result\"");
+          csv.push(row.join(","));
+
+          var row = [];
+          for(var i = 0; i < rows.length; i++) {
+            var cols = rows[i].querySelectorAll("select");
             for(var j = 0; j < cols.length; j++) {
                 if (cols[j].type == "select-one") {
                   row.push("\""+cols[j].selectedOptions[0].label+"\"");
                 }
-                else {
-                   row.push("\""+cols[j].innerText+"\"");
-                }
             }
+          }
+          var result = jQuery("#lastmessage").html();
+          row.push("\""+result+"\"");
+          csv.push(row.join(","));
+
+          var row = [];
+          for(var i = 0; i < rows.length; i++) {
+
             var warnings = rows[i].nextElementSibling;
             if (warnings.classList.contains("messages")) {
               row.push("\"" + warnings.innerText + "\"");
             }
-            csv.push(row.join(","));
+            else {
+              row.push("\" \"");
+            }
           }
-
-          csv.push(jQuery("#lastmessage").html());
+          csv.push(row.join(","));
 
           var csvcontent = csv.join("\r\n");
 
