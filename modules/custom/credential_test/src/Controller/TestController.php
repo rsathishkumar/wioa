@@ -370,19 +370,6 @@ class TestController extends ControllerBase {
           row.push("\""+result+"\"");
           csv.push(row.join(","));
 
-          var row = [];
-          for(var i = 0; i < rows.length; i++) {
-
-            var warnings = rows[i].nextElementSibling;
-            if (warnings.classList.contains("messages")) {
-              row.push("\"" + warnings.innerText + "\"");
-            }
-            else {
-              row.push("\" \"");
-            }
-          }
-          csv.push(row.join(","));
-
           var csvcontent = csv.join("\r\n");
 
           var csvFile;
