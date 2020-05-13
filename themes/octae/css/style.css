@@ -183,7 +183,7 @@ button {
   }
 }
 
-@media (max-width: 769px) {
+@media (max-width: 969px) {
   select {
     width: 100%;
   }
