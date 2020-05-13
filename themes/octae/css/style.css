@@ -178,6 +178,9 @@ button {
     text-align: center;
     font-size: 25px;
   }
+  .main-content .section {
+    min-height: auto;
+  }
 }
 
 @media (max-width: 769px) {
