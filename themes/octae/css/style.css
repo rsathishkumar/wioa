@@ -14,6 +14,7 @@ body, select, input {
 
 #header {
   background-color: #0071BC;
+  background-image: none;
 }
 
 .menu--main li a {
@@ -55,6 +56,7 @@ body, select, input {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
+  margin-bottom: 20px;
 }
 
 .region-content h2:before {
@@ -78,6 +80,22 @@ body, select, input {
   color: #FFF;
   margin: 0px;
   padding: 0px;
+}
+
+.region-primary-menu h1:after {
+  background-image: url('../images/header-arrow.png');
+  content: " ";
+  position: absolute;
+  width: 120px;
+  height: 56px;
+  background-repeat: no-repeat;
+  bottom: -70px;
+  left: -15px;
+  z-index: 9;
+}
+
+.layout-main {
+  margin-top: 25px;
 }
 
 .main-content .section {
@@ -107,6 +125,16 @@ body, select, input {
 
 .sidebar .block .content {
   font-size: 11px;
+}
+
+.sidebar .block .content a {
+  color: #FFF;
+  text-decoration: underline;
+  border: none;
+}
+
+.sidebar .block .content a:hover {
+  color: #FFF;
 }
 
 select {
@@ -156,4 +184,10 @@ button {
   select {
     width: 100%;
   }
+}
+
+/* css for Print page */
+.header-print {
+  background-color: #0071BC;
+  height: 100px;
 }
