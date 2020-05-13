@@ -3,10 +3,17 @@
  * your custom CSS modifications here.
  */
 
+body, select, input {
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+}
+
+#page, #main-wrapper {
+  background-color: #ebebeb;
+}
+
 #header {
-  background-color: #C4D79B;
-  background-image: -webkit-linear-gradient(top, #055a8e 0%, #1d84c3 100%);
-  background-image: linear-gradient(to bottom, #527902 0%, #C4D79B 100%);
+  background-color: #0071BC;
 }
 
 .menu--main li a {
@@ -17,4 +24,136 @@
 .tooltip-link {
   position: relative;
   font-size: 14px;
+}
+
+.left-col {
+  width: 50%;
+  float: left;
+}
+
+.left-col .region-header {
+  text-align: right;
+  padding: 20px 50px 0px;
+}
+
+.right-col {
+  width: 50%;
+  float: right;
+}
+
+.right-col .region-secondary-menu {
+  text-align: right;
+  padding: 50px 50px 0px;
+}
+
+.region-content h2 {
+  background-color: #f1f1f1;
+  font-size: 16px;
+  padding: 10px 10px;
+  font-weight: bold;
+  margin-left: 45px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.region-content h2:before {
+  background-image: url('../images/heading.png');
+  content: " ";
+  position: absolute;
+  width: 40px;
+  height: 35px;
+  background-repeat: no-repeat;
+  top: 5px;
+  left: 0px;
+}
+
+.region-primary-menu {
+  padding: 0px 15px 0px 0px;
+  margin-bottom: 20px;
+}
+
+.region-primary-menu h1 {
+  font-size: 35px;
+  color: #FFF;
+  margin: 0px;
+  padding: 0px;
+}
+
+.main-content .section {
+  border: 5px solid #0071bc;
+  min-height: 750px;
+  background-color: #FFF;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  padding: 20px 30px;
+}
+
+#sidebar-second {
+  background-color: #0071bc;
+  margin-top: 25px;
+}
+
+.sidebar .section {
+  padding: 0px;
+}
+
+.sidebar .block {
+  background-color: #0071bc;
+  border-color: #0071bc;
+  color: #FFF;
+}
+
+.sidebar .block .content {
+  font-size: 11px;
+}
+
+select {
+  margin: 5px 0px 20px;
+  width: 575px;
+  padding: 5px 35px 5px 5px;
+  border: none;
+  height: 40px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url('../images/down-arrow.png') 98% / 4% no-repeat #eee;
+}
+
+p.desc {
+  margin-bottom: 0px;
+  font-weight: bold;
+}
+
+button {
+  background-color: #0071bc;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  margin-right: 25px;
+  padding: 5px 10px;
+}
+
+@media (min-width: 851px) {
+  .layout-container {
+    max-width: 1140px;
+    padding: 0px 50px;
+  }
+}
+
+@media (max-width: 851px) {
+  .layout-container {
+    padding: 0px 15px;
+  }
+  .region-primary-menu h1 {
+    text-align: center;
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 769px) {
+  select {
+    width: 100%;
+  }
 }

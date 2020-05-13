@@ -489,10 +489,9 @@ class TestController extends ControllerBase {
             {this.getFourthValueMessage()}
             {this.getFifthLevelField()}
             {this.getFifthValueMessage()}
+            {this.getMessage()}
             {this.showPrintButton()}
             {this.showCSVButton()}
-            <div id="pdflink"></div>
-            {this.getMessage()}
             </form>
           )
         }

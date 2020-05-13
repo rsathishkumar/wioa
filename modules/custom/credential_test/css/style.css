@@ -4,24 +4,47 @@
 
 #firstmessage, #secondmessage, #thirdmessage, #fourthmessage, #fifthmessage, .success, .error {
   color: #FFF;
-  margin: 5px 0px 15px 0px !important;
+  margin: 5px 0px 15px 50px !important;
   padding: 10px 20px;
-  border-width: 1px 1px 1px 1px;
+  border: none;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+  position: relative;
 }
 
 #firstmessage, #fifthmessage {
   background-color: #ecca22;
-  border-color: #d2af05;
+  color: #000;
 }
 
 #secondmessage, #fourthmessage, #thirdmessage, .error {
   background-color: #ea6f6f;
-  border-color: #f33434;
+  border: none;
 }
 
 .success {
   background-color: #a7cc4d;
-  border-color: #84b313;
+  color: #000;
+}
+
+#secondmessage:before, #fourthmessage:before, #thirdmessage:before, .error:before, .success:before, #firstmessage:before, #fifthmessage:before {
+  background-image: url('../../../../themes/octae/images/error.png');
+  content: " ";
+  position: absolute;
+  width: 40px;
+  height: 35px;
+  background-repeat: no-repeat;
+  top: 20%;
+  left: -50px;
+}
+
+.success:before {
+  background-image: url('../../../../themes/octae/images/success.png');
+}
+
+#firstmessage:before, #fifthmessage:before {
+  background-image: url('../../../../themes/octae/images/warning.png');
 }
 
 #credential_form button {
