@@ -281,7 +281,7 @@ class TestController extends ControllerBase {
 
           return (
             <div className="questions">
-            <label>Is the training related to an in-demand industry/occupation in the local area? <p className="desc">20 C.F.R 680.210 (b) requires training to be directly linked to the employment opportunities in the local area or the planning region, or in another area to which the individuals are willing to commute or relocate</p></label>
+            <label>Is the training related to an in-demand industry/occupation in the local area?</label> <p className="desc">20 C.F.R 680.210 (b) requires training to be directly linked to the employment opportunities in the local area or the planning region, or in another area to which the individuals are willing to commute or relocate.</p>
     	    <select onChange={this.handleFifthLevelChange} value={this.state.fifthValue} id="in-demand-industry" name="in_demand_industry">
        	    <option value="">---</option>
       	    <option value="Yes">Yes</option>
@@ -440,13 +440,10 @@ class TestController extends ControllerBase {
 
           if (this.state.fifthValue) {
             pdf.text("Is the training related to an in-demand industry/occupation in the local area?", 70, i+30);
-            pdf.text("20 C.F.R 680.210 (b) requires training to be directly linked to the employment", 70, i+45);
-            pdf.text("opportunities in the local area or the planning region, or in another area to which the ", 70, i+60);
-            pdf.text("individuals are willing to commute or relocate", 70, i+75);
             pdf.setFillColor(238, 238, 238);
-            pdf.rect(70, i+85, 500, 30, "F");
-            pdf.text(this.state.fifthValue, 75, i+105);
-            i = i + 115;
+            pdf.rect(70, i+40, 500, 30, "F");
+            pdf.text(this.state.fifthValue, 75, i+60);
+            i = i + 70;
           }
 
           if (jQuery("#firstmessage").length > 0) {
