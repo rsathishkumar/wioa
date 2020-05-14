@@ -57,6 +57,10 @@ body, select, input {
   padding: 50px 50px 0px;
 }
 
+.region-content {
+  position: relative;
+}
+
 .region-content h2 {
   background-color: #f1f1f1;
   font-size: 16px;
@@ -85,8 +89,8 @@ body, select, input {
   font-size: 16px;
 }
 
-.region-content h2 a {
-  
+.region-content h2 a:hover {
+  border-bottom: none;
 }
 
 .region-primary-menu {
@@ -215,6 +219,7 @@ button {
   }
   .region-primary-menu h1 {
     font-size: 25px;
+
   }
 }
 
