@@ -28,7 +28,7 @@ body, select, input {
 }
 
 .left-col {
-  width: 50%;
+  width: 25%;
   float: left;
 }
 
@@ -37,8 +37,18 @@ body, select, input {
   padding: 20px 50px 0px;
 }
 
-.right-col {
+.middle-col {
   width: 50%;
+  float: left;
+}
+
+.middle-col img {
+  max-width: 400px;
+  padding-top: 50px;
+}
+
+.right-col {
+  width: 25%;
   float: right;
 }
 
@@ -70,6 +80,15 @@ body, select, input {
   left: 0px;
 }
 
+.region-content h2 a {
+  color: #000;
+  font-size: 16px;
+}
+
+.region-content h2 a {
+  
+}
+
 .region-primary-menu {
   padding: 0px 15px 0px 0px;
   margin-bottom: 20px;
@@ -80,6 +99,7 @@ body, select, input {
   color: #FFF;
   margin: 0px;
   padding: 0px;
+  position: relative;
 }
 
 .region-primary-menu h1:after {
@@ -151,7 +171,6 @@ select {
 
 p.desc {
   margin-bottom: 0px;
-  font-weight: bold;
 }
 
 button {
@@ -180,6 +199,22 @@ button {
   }
   .main-content .section {
     min-height: auto;
+  }
+  .left-col, .right-col {
+    width: 25%;
+  }
+  .middle-col {
+    width: 40%;
+  }
+  .left-col .region-header {
+    padding: 10px;
+  }
+  .right-col .region-secondary-menu {
+    padding: 10px;
+    padding-top: 50px;
+  }
+  .region-primary-menu h1 {
+    font-size: 25px;
   }
 }
 
