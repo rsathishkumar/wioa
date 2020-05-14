@@ -40,10 +40,10 @@ body, select, input {
 .middle-col {
   width: 50%;
   float: left;
+  text-align: center;
 }
 
 .middle-col img {
-  max-width: 400px;
   padding-top: 50px;
 }
 
