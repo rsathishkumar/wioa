@@ -28,7 +28,7 @@ body, select, input {
 }
 
 .left-col {
-  width: 18%;
+  width: 60%;
   float: left;
 }
 
@@ -37,17 +37,8 @@ body, select, input {
   padding: 20px 50px 0px;
 }
 
-.middle-col {
-  width: 50%;
-  float: left;
-}
-
-.middle-col img {
-  padding-top: 50px;
-}
-
 .right-col {
-  width: 25%;
+  width: 40%;
   float: right;
 }
 
@@ -208,7 +199,7 @@ button {
   }
   .right-col .region-secondary-menu {
     padding: 10px;
-    padding-top: 50px;
+    padding-top: 30px;
   }
   .region-primary-menu h1 {
     font-size: 25px;
@@ -219,12 +210,6 @@ button {
 @media (max-width: 969px) {
   select {
     width: 100%;
-  }
-  .left-col, .right-col {
-    width: 25%;
-  }
-  .middle-col {
-    width: 40%;
   }
 }
 
