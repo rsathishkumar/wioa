@@ -28,7 +28,7 @@ body, select, input {
 }
 
 .left-col {
-  width: 25%;
+  width: 18%;
   float: left;
 }
 
@@ -40,7 +40,6 @@ body, select, input {
 .middle-col {
   width: 50%;
   float: left;
-  text-align: center;
 }
 
 .middle-col img {
@@ -204,12 +203,6 @@ button {
   .main-content .section {
     min-height: auto;
   }
-  .left-col, .right-col {
-    width: 25%;
-  }
-  .middle-col {
-    width: 40%;
-  }
   .left-col .region-header {
     padding: 10px;
   }
@@ -226,6 +219,12 @@ button {
 @media (max-width: 969px) {
   select {
     width: 100%;
+  }
+  .left-col, .right-col {
+    width: 25%;
+  }
+  .middle-col {
+    width: 40%;
   }
 }
 
