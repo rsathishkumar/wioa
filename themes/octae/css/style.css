@@ -63,15 +63,16 @@ body, select, input {
   margin-bottom: 20px;
 }
 
-.region-content h2:before {
+a.tooltip-link:before {
   background-image: url('../images/heading.png');
   content: " ";
   position: absolute;
-  width: 40px;
-  height: 35px;
+  width: 20px;
+  height: 20px;
   background-repeat: no-repeat;
   top: 5px;
-  left: 0px;
+  left: -30px;
+  background-size: 20px;
 }
 
 .region-content h2 a {
