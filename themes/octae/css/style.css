@@ -63,6 +63,10 @@ body, select, input {
   margin-bottom: 20px;
 }
 
+.tooltip-link {
+  margin-left: 30px;
+}
+
 a.tooltip-link:before {
   background-image: url('../images/heading.png');
   content: " ";
